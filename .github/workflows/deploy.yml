@@ -1,0 +1,31 @@
+name: Deploy to Github Page
+
+on:
+  push
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      
+      - name: install mkdocs
+        run: |
+          pip install mkdocs
+          pip install mkdocs-material
+      
+      - name: build page
+        run: mkdocs build
+      
+      - name: Deploy to Github Pages
+        uses: JamesIves/github-pages-deploy-action@4.1.1
+        with:
+          branch: gh-page
+          folder: site
